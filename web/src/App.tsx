@@ -4,10 +4,22 @@ import { calculate } from "./api";
 type Op = "+" | "-" | "*" | "/";
 
 const BUTTONS = [
-  "7", "8", "9", "/",
-  "4", "5", "6", "*",
-  "1", "2", "3", "-",
-  "C", "0", ".", "+",
+  "7",
+  "8",
+  "9",
+  "/",
+  "4",
+  "5",
+  "6",
+  "*",
+  "1",
+  "2",
+  "3",
+  "-",
+  "C",
+  "0",
+  ".",
+  "+",
   "=",
 ] as const;
 
@@ -60,8 +72,21 @@ export default function App() {
       setAccumulator(null);
       setPendingOp(null);
       setFreshEntry(true);
+      pendo.track("calculation_performed", {
+        operator: pendingOp,
+        operandA: String(accumulator),
+        operandB: String(b),
+        result: String(result),
+      });
     } catch (e) {
-      setError((e as Error).message);
+      const errorMessage = (e as Error).message;
+      setError(errorMessage);
+      pendo.track("calculation_error", {
+        operator: pendingOp,
+        operandA: String(accumulator),
+        operandB: String(b),
+        errorMessage: errorMessage.substring(0, 100),
+      });
     }
   };
 
@@ -133,7 +158,10 @@ export default function App() {
       </div>
 
       {error && (
-        <p data-testid="error" style={{ color: "crimson", marginTop: 16, textAlign: "center" }}>
+        <p
+          data-testid="error"
+          style={{ color: "crimson", marginTop: 16, textAlign: "center" }}
+        >
           {error}
         </p>
       )}
