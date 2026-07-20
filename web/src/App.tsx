@@ -1,13 +1,33 @@
 import { useState } from "react";
 import { calculate } from "./api";
 
+declare global {
+  interface Window {
+    pendo?: {
+      track: (eventName: string, properties?: Record<string, unknown>) => void;
+    };
+  }
+}
+
 type Op = "+" | "-" | "*" | "/";
 
 const BUTTONS = [
-  "7", "8", "9", "/",
-  "4", "5", "6", "*",
-  "1", "2", "3", "-",
-  "C", "0", ".", "+",
+  "7",
+  "8",
+  "9",
+  "/",
+  "4",
+  "5",
+  "6",
+  "*",
+  "1",
+  "2",
+  "3",
+  "-",
+  "C",
+  "0",
+  ".",
+  "+",
   "=",
 ] as const;
 
@@ -60,8 +80,23 @@ export default function App() {
       setAccumulator(null);
       setPendingOp(null);
       setFreshEntry(true);
+
+      window.pendo?.track("calculation_completed", {
+        operator: pendingOp,
+        operand_a: accumulator,
+        operand_b: b,
+        result: result,
+      });
     } catch (e) {
-      setError((e as Error).message);
+      const errorMessage = (e as Error).message;
+      setError(errorMessage);
+
+      window.pendo?.track("calculation_error", {
+        operator: pendingOp,
+        operand_a: accumulator,
+        operand_b: b,
+        error_message: errorMessage,
+      });
     }
   };
 
@@ -133,7 +168,10 @@ export default function App() {
       </div>
 
       {error && (
-        <p data-testid="error" style={{ color: "crimson", marginTop: 16, textAlign: "center" }}>
+        <p
+          data-testid="error"
+          style={{ color: "crimson", marginTop: 16, textAlign: "center" }}
+        >
           {error}
         </p>
       )}
