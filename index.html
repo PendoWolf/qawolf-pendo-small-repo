@@ -27,5 +27,18 @@ pendo.initialize({
 <button type="button">+</button>
 <script>
   const n = document.getElementById("n");
-  document.querySelector("button").onclick = () => n.textContent++;
+  const trackedMilestones = new Set();
+  const milestones = [10, 25, 50, 100];
+
+  document.querySelector("button").onclick = () => {
+    const newCount = Number(++n.textContent);
+
+    // Track when counter reaches engagement milestones
+    if (typeof pendo !== "undefined" && milestones.includes(newCount) && !trackedMilestones.has(newCount)) {
+      trackedMilestones.add(newCount);
+      pendo.track("Counter Milestone Reached", {
+        milestone: newCount
+      });
+    }
+  };
 </script>
