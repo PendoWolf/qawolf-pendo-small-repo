@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Counter</title>
+<style>
+  html, body { height: 100%; margin: 0; }
+  body { display: grid; place-items: center; font: 2rem system-ui; }
+  button { font: inherit; padding: .4em 1.2em; cursor: pointer; }
+</style>
+<p id="n">0</p>
+<button type="button">+</button>
+<script>
+  const n = document.getElementById("n");
+  document.querySelector("button").onclick = () => n.textContent++;
+</script>
