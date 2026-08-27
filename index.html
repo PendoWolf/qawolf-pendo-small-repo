@@ -27,5 +27,10 @@ pendo.initialize({
 <button type="button">+</button>
 <script>
   const n = document.getElementById("n");
-  document.querySelector("button").onclick = () => n.textContent++;
+  document.querySelector("button").onclick = () => {
+    n.textContent++;
+    pendo.track("Counter Incremented", {
+      count: parseInt(n.textContent, 10)
+    });
+  };
 </script>
