@@ -1,44 +1,83 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<meta charset="utf-8">
-<title>Counter</title>
-<script>
-(function(apiKey){
-    (function(p,e,n,d,o){var v,w,x,y,z;o=p[d]=p[d]||{};o._q=o._q||[];
-    v=['initialize','identify','updateOptions','pageLoad','track', 'trackAgent'];for(w=0,x=v.length;w<x;++w)(function(m){
-    o[m]=o[m]||function(){o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));};})(v[w]);
-    y=e.createElement(n);y.async=!0;y.src='https://cdn.pendo-dev.pendo-dev.com/agent/static/'+apiKey+'/pendo.js';
-    z=e.getElementsByTagName(n)[0];z.parentNode.insertBefore(y,z);})(window,document,'script','pendo');
-})('e1146287-645c-43f9-81a1-2b09a70811e0');
-</script>
-<script>
-pendo.initialize({
-  visitor: {
-    id: ''
-  }
-});
-</script>
-<style>
-  html, body { height: 100%; margin: 0; }
-  body { display: grid; place-items: center; font: 2rem system-ui; }
-  button { font: inherit; padding: .4em 1.2em; cursor: pointer; }
-</style>
-<p id="n">0</p>
-<button type="button">+</button>
-<script>
-  const n = document.getElementById("n");
-  const milestones = [10, 25, 50, 100];
-  const trackedMilestones = new Set();
-
-  document.querySelector("button").onclick = () => {
-    const newCount = Number(++n.textContent);
-
-    // Track when counter reaches engagement milestones
-    if (milestones.includes(newCount) && !trackedMilestones.has(newCount)) {
-      trackedMilestones.add(newCount);
-      pendo.track("Counter Milestone Reached", {
-        milestone: newCount
-      });
+  <meta charset="utf-8" />
+  <title>Counter</title>
+  <script>
+    (function (apiKey) {
+      (function (p, e, n, d, o) {
+        var v, w, x, y, z;
+        o = p[d] = p[d] || {};
+        o._q = o._q || [];
+        v = [
+          "initialize",
+          "identify",
+          "updateOptions",
+          "pageLoad",
+          "track",
+          "trackAgent",
+        ];
+        for (w = 0, x = v.length; w < x; ++w)
+          (function (m) {
+            o[m] =
+              o[m] ||
+              function () {
+                o._q[m === v[0] ? "unshift" : "push"](
+                  [m].concat([].slice.call(arguments, 0)),
+                );
+              };
+          })(v[w]);
+        y = e.createElement(n);
+        y.async = !0;
+        y.src =
+          "https://cdn.pendo-dev.pendo-dev.com/agent/static/" +
+          apiKey +
+          "/pendo.js";
+        z = e.getElementsByTagName(n)[0];
+        z.parentNode.insertBefore(y, z);
+      })(window, document, "script", "pendo");
+    })("e1146287-645c-43f9-81a1-2b09a70811e0");
+  </script>
+  <script>
+    pendo.initialize({
+      visitor: {
+        id: "",
+      },
+    });
+  </script>
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
     }
-  };
-</script>
+    body {
+      display: grid;
+      place-items: center;
+      font: 2rem system-ui;
+    }
+    button {
+      font: inherit;
+      padding: 0.4em 1.2em;
+      cursor: pointer;
+    }
+  </style>
+  <p id="n">0</p>
+  <button type="button">+</button>
+  <script>
+    const n = document.getElementById("n");
+    const milestones = [10, 25, 50, 100];
+    const trackedMilestones = new Set();
+
+    document.querySelector("button").onclick = () => {
+      const newCount = Number(++n.textContent);
+
+      // Track when counter reaches engagement milestones
+      if (milestones.includes(newCount) && !trackedMilestones.has(newCount)) {
+        trackedMilestones.add(newCount);
+        pendo.track("Counter Milestone Reached", {
+          milestone: newCount,
+        });
+      }
+    };
+  </script>
+</html>
