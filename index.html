@@ -1,31 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<meta charset="utf-8">
-<title>Counter</title>
-<script>
-(function(apiKey){
-    (function(p,e,n,d,o){var v,w,x,y,z;o=p[d]=p[d]||{};o._q=o._q||[];
-    v=['initialize','identify','updateOptions','pageLoad','track', 'trackAgent'];for(w=0,x=v.length;w<x;++w)(function(m){
-    o[m]=o[m]||function(){o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));};})(v[w]);
-    y=e.createElement(n);y.async=!0;y.src='https://cdn.pendo-dev.pendo-dev.com/agent/static/'+apiKey+'/pendo.js';
-    z=e.getElementsByTagName(n)[0];z.parentNode.insertBefore(y,z);})(window,document,'script','pendo');
-})('c8309065-5ce5-4676-840d-7314e6a58ea7');
-</script>
-<script>
-pendo.initialize({
-  visitor: {
-    id: ''
-  }
-});
-</script>
-<style>
-  html, body { height: 100%; margin: 0; }
-  body { display: grid; place-items: center; font: 2rem system-ui; }
-  button { font: inherit; padding: .4em 1.2em; cursor: pointer; }
-</style>
-<p id="n">0</p>
-<button type="button">+</button>
-<script>
-  const n = document.getElementById("n");
-  document.querySelector("button").onclick = () => n.textContent++;
-</script>
+  <meta charset="utf-8" />
+  <title>Counter</title>
+  <script>
+    (function (apiKey) {
+      (function (p, e, n, d, o) {
+        var v, w, x, y, z;
+        o = p[d] = p[d] || {};
+        o._q = o._q || [];
+        v = [
+          "initialize",
+          "identify",
+          "updateOptions",
+          "pageLoad",
+          "track",
+          "trackAgent",
+        ];
+        for (w = 0, x = v.length; w < x; ++w)
+          (function (m) {
+            o[m] =
+              o[m] ||
+              function () {
+                o._q[m === v[0] ? "unshift" : "push"](
+                  [m].concat([].slice.call(arguments, 0)),
+                );
+              };
+          })(v[w]);
+        y = e.createElement(n);
+        y.async = !0;
+        y.src =
+          "https://cdn.pendo-dev.pendo-dev.com/agent/static/" +
+          apiKey +
+          "/pendo.js";
+        z = e.getElementsByTagName(n)[0];
+        z.parentNode.insertBefore(y, z);
+      })(window, document, "script", "pendo");
+    })("6a535d78-e918-4642-bc95-28613907dce0");
+  </script>
+  <script>
+    pendo.initialize({
+      visitor: {
+        id: "",
+      },
+    });
+  </script>
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      display: grid;
+      place-items: center;
+      font: 2rem system-ui;
+    }
+    button {
+      font: inherit;
+      padding: 0.4em 1.2em;
+      cursor: pointer;
+    }
+  </style>
+  <p id="n">0</p>
+  <button type="button">+</button>
+  <script>
+    const n = document.getElementById("n");
+    document.querySelector("button").onclick = () => n.textContent++;
+  </script>
+</html>
