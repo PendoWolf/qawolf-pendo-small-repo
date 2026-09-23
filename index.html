@@ -65,6 +65,26 @@
   <button type="button">+</button>
   <script>
     const n = document.getElementById("n");
-    document.querySelector("button").onclick = () => n.textContent++;
+
+    // Milestones that have already been reported this session
+    const trackedMilestones = new Set();
+    const milestones = [10, 25, 50, 100];
+
+    document.querySelector("button").onclick = () => {
+      const newCount = ++n.textContent;
+
+      // Track every counter increment with the current count value
+      pendo.track("Counter Incremented", {
+        count: Number(newCount),
+      });
+
+      // Track notable milestones (fires once per milestone per session)
+      if (milestones.includes(Number(newCount)) && !trackedMilestones.has(Number(newCount))) {
+        trackedMilestones.add(Number(newCount));
+        pendo.track("Counter Milestone Reached", {
+          milestone: Number(newCount),
+        });
+      }
+    };
   </script>
 </html>
