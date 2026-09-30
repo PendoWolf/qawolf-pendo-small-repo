@@ -65,6 +65,12 @@
   <button type="button">+</button>
   <script>
     const n = document.getElementById("n");
-    document.querySelector("button").onclick = () => n.textContent++;
+    document.querySelector("button").onclick = () => {
+      n.textContent++;
+      // Track each counter increment with the new value
+      pendo.track("Counter Incremented", {
+        counter_value: parseInt(n.textContent, 10),
+      });
+    };
   </script>
 </html>
