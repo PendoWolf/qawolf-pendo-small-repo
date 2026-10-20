@@ -65,6 +65,18 @@
   <button type="button">+</button>
   <script>
     const n = document.getElementById("n");
-    document.querySelector("button").onclick = () => n.textContent++;
+    // Pendo Track Event: send "Counter Milestone Reached" the first time the
+    // count hits each of these values. Set.delete() returns true only once per
+    // value, so each milestone is reported at most once per page view.
+    const pendingMilestones = new Set([10, 25, 50, 100, 250, 500, 1000]);
+    document.querySelector("button").onclick = () => {
+      const count = ++n.textContent;
+      if (pendingMilestones.delete(count)) {
+        pendo.track("Counter Milestone Reached", {
+          milestone: count,
+          time_on_page_ms: Math.round(performance.now()),
+        });
+      }
+    };
   </script>
 </html>
