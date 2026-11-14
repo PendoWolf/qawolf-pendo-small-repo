@@ -65,6 +65,21 @@
   <button type="button">+</button>
   <script>
     const n = document.getElementById("n");
-    document.querySelector("button").onclick = () => n.textContent++;
+    document.querySelector("button").onclick = () => {
+      const previousCount = Number(n.textContent);
+      n.textContent++;
+      const newCount = Number(n.textContent);
+      // Track Event: the displayed count went up by 1 after the click.
+      if (newCount === previousCount + 1) {
+        try {
+          pendo.track("Counter incremented", {
+            previous_count: previousCount,
+            new_count: newCount,
+          });
+        } catch (e) {
+          // Don't let tracking failures break the counter.
+        }
+      }
+    };
   </script>
 </html>
